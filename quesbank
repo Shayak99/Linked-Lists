@@ -1,0 +1,153 @@
+Given a linked list and a number n, you have to find the sum of the last n nodes of the linked list in a single traversal. Explain your approach in brief.
+
+
+The use of two-pointers will require a single traversal. We will have to maintain two pointers – reference pointer and main pointer. Both these pointers will be initialized to head. First, the reference pointer will be moved to n nodes from the head, and while traversing, we will keep adding the values and store them into a variable called sum1. Now both the pointers will move simultaneously until the reference pointer reaches the end of the list and while traversing, we will keep adding the values of the nodes. The reference pointer is storing this sum in the variable sum1, and the main pointer will be storing it in sum2. Now, (sum1 – sum2) is the answer, that is the required sum of the last n nodes.
+
+int getSum(Node* head, int n)
+{
+   if (n <= 0)
+       return 0;
+
+   int sum1 = 0, sum2 = 0;
+   struct Node* ptr1 = head;
+   struct Node* ptr2 = head;
+
+   // the sum of the first n nodes is to be calculated
+   for (ptr1 = head; ptr1 != NULL; ptr1 = ptr1->next;) 
+   {                  
+       sum += ptr1->value;
+       n--;
+       if(n == 0)
+         break;
+   }
+   // now there is a distance of n nodes between the two pointers
+   // move to the end of the linked list
+   while (ptr1 != NULL) 
+   { 
+       // sum of all the nodes
+       sum1 += ptr1->value;
+       // sum of the first length -  n nodes
+       sum2 += ptr2->value;
+
+       ptr1 = ptr2->next;
+       ptr2 = ptr2->next;
+   }
+
+   // returning the required sum
+   return (sum1 - sum2);
+}
+
+-----------------------------------------
+
+What algorithm will you implement to find similar elements from two Linked Lists given and return the result in the form of a Linked List? Assume there are no duplicates.
+
+Create an empty hash table and set the result list to NULL. While traversing List1, insert the element in the hash table for each element visited in List1. While traversing List2, look for the entries in the hash table for each element visited in List2. If the element is already existing, add it to the result list. If the element isn't present, it is to be ignored.
+
+Node* getIntersection(Node* head1, Node* head2)
+{
+       unordered_map < int > m;
+       Node* n1 = head1;
+       Node* n2 = head2;
+       Node* head = NULL;
+
+       // loop stores all the elements of list1 in hset
+       while (n1) 
+       {
+           m[n1->value] = 1;
+           n1 = n1->next;
+       }
+
+       // For every element of list2 present in hset
+       // loop inserts the element into the result
+       while (n2 != null) 
+       {
+           if (m[n2->value] == 1)
+           {
+               Node* temp = new Node();
+               temp->value = n2->value;
+               temp->next = head;
+               head = temp;
+           }
+           n2 = n2->next;
+       }
+       return head;
+}
+
+------------------------------------------
+
+Why is merge sort a better option than quicksort for linked lists?
+
+When it comes to linked lists, there are a few things to keep in mind. The issue is unique due to the memory allocation differences between arrays and linked lists. Unlike arrays, linked list nodes in memory may not be adjacent.
+We can insert items in the middle of a linked list in O(1) extra space and O(1) time if we are given a reference/pointer to the previous node, unlike an array. As a result, the merge sort operation can be accomplished without the need for additional linked list space.
+We can do random access in arrays since the elements are continuous in memory. In contrast to arrays, we can't access a linked list at random.
+Quick Sort necessitates a great deal of this type of access. Because we don't have a continuous block of memory, we have to travel from the head to the i'th node to get to the i'th index in a linked list. Merge sort accesses data in a sequential manner, with less requirement for random access.
+
+---------------------------------------------
+
+Given a 2-D matrix. You need to convert it into a linked list matrix such that each node is linked to its next right and down node and display it.
+
+The idea is to create a new node for each element of the matrix and then create its next down and right nodes in a recursive manner.
+
+Node* construct(int A[][3], int m, int n, int i, int j)
+{
+   // check if i or j is out of bounds
+   if (i > n - 1 || j > m - 1)
+       return NULL;
+
+   // a new node for current i and j is created
+   // and its down and right pointers are
+   //recursively allocated
+   Node* t = new Node();
+   t->value = A[i][j];
+   t->right = construct(A, m, n, i, j + 1);
+   t->down  = construct(A, m, n, i + 1, j);
+   return t;
+}
+
+// function to display linked list data
+void printData(Node* head)
+{
+   // pointer to move down
+   Node* d;
+   // pointer to move down
+   
+   Node* r;
+
+   // loop till node->down is not NULL
+   for( d = head; d!=NULL; d = d->down)
+   {
+       for( r = d; r!=NULL; r = r->right)
+       {
+       // loop till node->right is not NULL
+           cout << r->value << " ";
+           
+       }
+       cout << endl;
+      
+   }
+}
+
+-------------------------------------------------------
+
+
+Actually we don't care about the "value" of difference, we just want to make sure two pointers reach the intersection node at the same time.
+
+We can use two iterations to do that. In the first iteration, we will reset the pointer of one linkedlist to the head of another linkedlist after it reaches the tail node. In the second iteration, we will move two pointers until they points to the same node. Our operations in first iteration will help us counteract the difference. So if two linkedlist intersects, the meeting point in second iteration must be the intersection point. If the two linked lists have no intersection at all, then the meeting pointer in second iteration must be the tail node of both lists, which is null
+
+
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    //boundary check
+    if(headA == null || headB == null) return null;
+    
+    ListNode a = headA;
+    ListNode b = headB;
+    
+    //if a & b have different len, then we will stop the loop after second iteration
+    while( a != b){
+    	//for the end of first iteration, we just reset the pointer to the head of another linkedlist
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;    
+    }
+    
+    return a;
+}
