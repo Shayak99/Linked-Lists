@@ -151,3 +151,35 @@ public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
     
     return a;
 }
+-------------------------------------------
+
+Merge two sorted lists 
+
+class Solution {
+    
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode ans = new ListNode(0);
+        ListNode n = ans;
+        ListNode n1 = l1;
+        ListNode n2 = l2;
+        while(n1!=null||n2!=null){
+            int val1 = (n1!=null) ? n1.val : Integer.MAX_VALUE;
+            int val2 = (n2!=null) ? n2.val : Integer.MAX_VALUE;
+            
+            n.next = new ListNode((int)Math.min(val1,val2));
+            n=n.next;
+            if(val1<=val2){
+                n1=n1.next;
+            }
+            else{
+                n2=n2.next;
+            }
+        }
+        
+        return ans.next;
+    }
+}
+
+---------------------------------------
+
+
