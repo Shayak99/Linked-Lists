@@ -4,6 +4,7 @@ Given a linked list and a number n, you have to find the sum of the last n nodes
 The use of two-pointers will require a single traversal. We will have to maintain two pointers – reference pointer and main pointer. Both these pointers will be initialized to head. First, the reference pointer will be moved to n nodes from the head, and while traversing, we will keep adding the values and store them into a variable called sum1. Now both the pointers will move simultaneously until the reference pointer reaches the end of the list and while traversing, we will keep adding the values of the nodes. The reference pointer is storing this sum in the variable sum1, and the main pointer will be storing it in sum2. Now, (sum1 – sum2) is the answer, that is the required sum of the last n nodes.
 
 int getSum(Node* head, int n)
+
 {
    if (n <= 0)
        return 0;
