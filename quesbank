@@ -27,7 +27,7 @@ int getSum(Node* head, int n)
        // sum of all the nodes
        sum1 += ptr1->value;
        // sum of the first length -  n nodes
-       sum2 += ptr2->value;
+       sum2 += ptr2->value; 
 
        ptr1 = ptr2->next;
        ptr2 = ptr2->next;
